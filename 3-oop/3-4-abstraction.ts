@@ -5,7 +5,7 @@
   };
 
   interface CoffeeMaker {
-    makeCoffee(shots: number);
+    makeCoffee(shots: number): CoffeeCup;
   }
   class CoffeeMachine implements CoffeeMaker {
     // CoffeeMaker 인터페이스 규격에 따라 CoffeeMachine을 구현해야함
@@ -34,15 +34,14 @@
       };
     }
 
-    makeCoffee(shots: number) {
+    makeCoffee(shots: number): CoffeeCup {
       this.grindBeans(shots);
       this.preHeat();
-      this.extract(shots);
+      return this.extract(shots);
     }
   }
 
   const maker = new CoffeeMachine(50); //클래스를 생성할때 커피콩 갯수를 늘리고 시작!
   const coffee = maker.makeCoffee(2);
-  console.log(maker);
   console.log(coffee);
 }
