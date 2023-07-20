@@ -7,17 +7,13 @@
   interface CoffeeMaker {
     makeCoffee(shots: number): CoffeeCup;
   }
-  interface CommercialCoffeeMaker {
-    makeCoffee(shots: number): CoffeeCup;
-    fillCoffeeBeans(beans: number): void;
-    clean(): void;
-  }
-  class CoffeeMachine implements CoffeeMaker, CommercialCoffeeMaker {
+
+  class CoffeeMachine implements CoffeeMaker {
     // CoffeeMaker 인터페이스 규격에 따라 CoffeeMachine을 구현해야함
     private static BEANS_GRAMM_PER_SHOT: number = 7;
     //변하지 않는 데이터는 static을 선언해서 class level로 지정함으로써 new CoffeeMachine() 할때 마다 BEANS_GRAMM_PER_SHOT이 생성되는 것을 막음
     private coffeeBeans: number = 0; // instance level
-    private constructor(coffeeBeans: number) {
+    constructor(coffeeBeans: number) {
       this.coffeeBeans = coffeeBeans;
     }
     static makeMachine(coffeeBeans: number): CoffeeMachine {
@@ -54,27 +50,22 @@
     }
   }
 
-  class AmateurUser {
-    constructor(private machine: CoffeeMaker) {}
-    makeCoffee() {
-      const coffee = this.machine.makeCoffee(2);
-      console.log(coffee);
+  class CaffeLatteMachine extends CoffeeMachine {
+    steamMilk() {
+      console.log("steaming some milk~");
+    }
+    makeCoffee(shots: number): CoffeeCup {
+      const coffee = super.makeCoffee(shots); //super 키워드 이용해서 부모클래스의 메서드를 사용할 수 있음.
+      this.steamMilk();
+      return {
+        ...coffee,
+        hasmilk: true,
+      };
     }
   }
 
-  class ProBarista {
-    constructor(private machine: CommercialCoffeeMaker) {}
-    makeCoffee() {
-      const coffee = this.machine.makeCoffee(4);
-      console.log(coffee);
-      this.machine.fillCoffeeBeans(59);
-      this.machine.clean();
-    }
-  }
-
-  const maker: CoffeeMachine = CoffeeMachine.makeMachine(100);
-  const amateur = new AmateurUser(maker);
-  amateur.makeCoffee();
-  const pro = new ProBarista(maker);
-  pro.makeCoffee();
+  const machine = new CoffeeMachine(100);
+  const latteMachine = new CaffeLatteMachine(100);
+  const coffee = latteMachine.makeCoffee(1);
+  console.log(coffee);
 }
