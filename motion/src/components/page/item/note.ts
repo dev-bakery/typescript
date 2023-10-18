@@ -1,15 +1,15 @@
 import { BaseComponent } from "../component.js";
 
 export class NoteComponent extends BaseComponent<HTMLElement> {
-  constructor(title: string, desc: string) {
+  constructor(title: string, body: string) {
     super(`<section class="note">
-            <span class="text__title"></span>
-            <p class="text__desc"></p>
+            <h2 class="note_title"></h2>
+            <p class="note__body"></p>
           </section>`);
-    const titleElement = this.element.querySelector(".text__title")! as HTMLSpanElement;
+    const titleElement = this.element.querySelector(".note_title")! as HTMLHeadingElement;
     titleElement.textContent = title;
 
-    const descElement = this.element.querySelector(".text__desc")! as HTMLParagraphElement;
-    descElement.textContent = desc;
+    const bodyElement = this.element.querySelector(".note__body")! as HTMLParagraphElement;
+    bodyElement.textContent = body;
   }
 }

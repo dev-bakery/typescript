@@ -10,7 +10,7 @@ class App {
         image.attachTo(appRoot, "beforeend");
         const note = new NoteComponent("노트 1", "이게 바로 첫번째 노트야");
         note.attachTo(appRoot, "beforeend");
-        const todo = new TodoComponent("할일 1");
+        const todo = new TodoComponent("할일 1", "장보기");
         todo.attachTo(appRoot, "beforeend");
     }
 }
